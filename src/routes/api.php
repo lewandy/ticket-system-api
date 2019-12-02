@@ -14,11 +14,16 @@ use Illuminate\Http\Request;
 */
 
 
-Route::get('unauthorized', function() {
-    return response()->json(['message' => 'unauthorized'],401);
+Route::get('unauthorized', function () {
+    return response()->json(['message' => 'unauthorized'], 401);
 })->name('unauthorized');
 
 //Auth routes
-Route::post('login','API\AuthController@Authenticate');
+Route::post('login', 'API\AuthController@Authenticate');
 
-Route::resource('employees','API\EmployeeController');
+//resources
+Route::resource('employees', 'API\EmployeeController');
+Route::resource('tickets', 'API\TicketController');
+
+//ticket status list
+Route::get('tickets-status', 'API\StatusTicketController');
