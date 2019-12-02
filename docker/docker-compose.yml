@@ -255,7 +255,7 @@ services:
     postgres:
       build: ./postgres
       volumes:
-        - ${DATA_PATH_HOST}/postgres:/var/lib/postgresql/data
+        - postgres:/var/lib/postgresql/data
         - ${POSTGRES_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
       ports:
         - "${POSTGRES_PORT}:5432"
