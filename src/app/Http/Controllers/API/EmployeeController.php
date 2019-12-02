@@ -13,7 +13,7 @@ class EmployeeController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api');
+        // $this->middleware('auth:api');
     }
 
     /**
@@ -34,12 +34,12 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //Valite incoming request data..
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
             'last_name' => 'required|max:255',
             'email' => 'required|email|unique:employees',
-            'password' => 'required|confirmed|string'
+            'password' => 'required|confirmed|string',
+            'status' => 'required|bool'
         ]);
 
         if ($validator->fails()) {
