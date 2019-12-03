@@ -13,7 +13,7 @@ class EmployeeController extends Controller
 
     public function __construct()
     {
-        // $this->middleware('auth:api');
+        //$this->middleware('auth:api');
     }
 
     /**
@@ -23,7 +23,11 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return Employee::all();
+        try {
+            return Employee::all();
+        } catch (\Throwable $th) {
+            return response()->json(['Error' => $th->getMessage()], 500);
+        }
     }
 
     /**
@@ -56,9 +60,9 @@ class EmployeeController extends Controller
 
         try {
             $employee->save();
-            return response()->json($employee, 200);
+            return response()->json($employee, 201);
         } catch (\Throwable $th) {
-            return response()->json(['error' => $th], 500);
+            return response()->json(['Error' => $th->getMessage()], 500);
         }
     }
 
@@ -70,7 +74,11 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        return response()->json($employee, 200);
+        try {
+            return response()->json($employee, 200);
+        } catch (\Throwable $th) {
+            return response()->json(['Error' => $th->getMessage()], 500);
+        }
     }
 
     /**
@@ -103,7 +111,7 @@ class EmployeeController extends Controller
             $employee->save();
             return response()->json($employee, 200);
         } catch (\Throwable $th) {
-            return response()->json(['error' => $th], 500);
+            return response()->json(['Error' => $th->getMessage()], 500);
         }
     }
 
@@ -117,9 +125,9 @@ class EmployeeController extends Controller
     {
         try {
             $employee->delete();
-            return response()->json(["message" => "employee deleted"]);
+            return response()->json(["message" => "Deleted"], 200);
         } catch (\Throwable $th) {
-            return response()->json(["error" => $th]);
+            return response()->json(['Error' => $th->getMessage()], 500);
         }
     }
 }
