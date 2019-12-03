@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\TicketStatus;
 
 class TicketStatusesTableSeeder extends Seeder
 {
@@ -11,13 +12,12 @@ class TicketStatusesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('ticket_statuses')->insert([
+        TicketStatus::create([
             'name' => 'Abierto',
             'description' => 'Este es un ticket con estado abierto',
             'slug' => 'abierto',
         ]);
-
-        DB::table('ticket_statuses')->insert([
+        TicketStatus::create([
             'name' => 'Cerrado',
             'description' => 'Este es un ticket con estado cerrado',
             'slug' => 'cerrado',
