@@ -23,7 +23,8 @@ class TicketController extends Controller
      */
     public function index()
     {
-        return response()->json(Ticket::all(), 200);
+        $data = TicketResource::collection(Ticket::all());
+        return response()->json($data, 200);
     }
 
     /**
