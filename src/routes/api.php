@@ -21,9 +21,9 @@ Route::get('unauthorized', function () {
 //Auth routes
 Route::post('login', 'API\AuthController@Authenticate');
 
-//resources
+//Resources
 Route::resource('employees', 'API\EmployeeController');
 Route::resource('tickets', 'API\TicketController');
 
-//ticket status list
-Route::get('tickets-status', 'API\StatusTicketController');
+//Ticket status list
+Route::get('tickets-status', 'API\TicketStatusController');
