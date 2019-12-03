@@ -22,3 +22,5 @@ Route::resource('tickets', 'API\TicketController');
 
 //Ticket status list
 Route::get('tickets-status', 'API\TicketStatusController');
+
+Route::get('tickets/{ticketId}/assign/{employeeId}','API\TicketController@addEmployeeToTicket');

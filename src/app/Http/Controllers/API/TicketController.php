@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Ticket;
+use App\Employee;
+use App\TicketEmployee;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -12,7 +14,7 @@ class TicketController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        //$this->middleware('auth:api');
     }
 
     /**
@@ -42,7 +44,7 @@ class TicketController extends Controller
             'subject' => 'required|max:255',
             'description' => 'required|string',
             'employee_id' => 'required|numeric|exists:employees,id',
-            'status_id' => 'required|numeric|exists:ticket_status,id',
+            'status_id' => 'required|numeric|exists:ticket_statuses,id',
         ]);
 
         if ($validator->fails()) {
@@ -123,6 +125,24 @@ class TicketController extends Controller
         try {
             $ticket->delete();
             return response()->json(['message' => 'Deleted'], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['Error' => $th->getMessage()], 500);
+        }
+    }
+
+    /**
+     * @param int $ticketId
+     * @param int $employeeId
+     */
+    public function addEmployeeToTicket($ticketId, $employeeId)
+    {
+        try {
+            $ticketEmployee = new TicketEmployee([
+                'employee_id' => $employeeId,
+                'ticket_id' => $ticketId
+            ]);
+            $ticketEmployee->save();
+            return response()->json(['message' => 'Employee assigned to ticket'], 200);
         } catch (\Throwable $th) {
             return response()->json(['Error' => $th->getMessage()], 500);
         }
