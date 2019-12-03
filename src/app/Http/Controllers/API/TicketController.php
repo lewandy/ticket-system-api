@@ -4,16 +4,15 @@ namespace App\Http\Controllers\API;
 
 use App\Ticket;
 use Illuminate\Http\Request;
-use App\Http\Resources\TicketResource as TicketResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpFoundation\Response;
+use App\Http\Resources\TicketResource as TicketResource;
 
 class TicketController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('auth:api');
+        $this->middleware('auth:api');
     }
 
     /**
@@ -23,8 +22,12 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $data = TicketResource::collection(Ticket::all());
-        return response()->json($data, 200);
+        try {
+            $data = TicketResource::collection(Ticket::all());
+            return response()->json($data, 200);
+        } catch (\Throwable $th) {
+            return response()->json(['Error' => $th->getMessage()], 500);
+        }
     }
 
     /**
@@ -37,9 +40,9 @@ class TicketController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'subject' => 'required|max:255',
-            'description' => 'required',
-            'employee_id' => 'required|numeric',
-            'status_id' => 'required|numeric',
+            'description' => 'required|string',
+            'employee_id' => 'required|numeric|exists:employees,id',
+            'status_id' => 'required|numeric|exists:ticket_status,id',
         ]);
 
         if ($validator->fails()) {
@@ -55,9 +58,9 @@ class TicketController extends Controller
 
         try {
             $ticket->save();
-            return response()->json($ticket, 200);
+            return response()->json($ticket, 201);
         } catch (\Throwable $th) {
-            return response()->json(["message" => $th,], 400);
+            return response()->json(['Error' => $th->getMessage()], 500);
         }
     }
 
@@ -67,13 +70,13 @@ class TicketController extends Controller
      * @param  \App\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Ticket $ticket)
     {
         try {
-            $ticket = new TicketResource(Ticket::find($id));
-            return response()->json($ticket, isset($ticket) ? 200 : 404);
+            $resource = new TicketResource($ticket);
+            return response()->json($resource, isset($ticket) ? 200 : 404);
         } catch (\Throwable $th) {
-            return response()->json(["message" => $th]);
+            return response()->json(['Error' => $th->getMessage()], 500);
         }
     }
 
@@ -93,9 +96,8 @@ class TicketController extends Controller
             'status_id' => 'required|numeric',
         ]);
 
-        if ($validator->fails()) {
+        if ($validator->fails())
             return response()->json($validator->errors(), 400);
-        }
 
         $ticket->subject = $request['subject'];
         $ticket->description = $request['description'];
@@ -106,7 +108,7 @@ class TicketController extends Controller
             $ticket->save();
             return response()->json($ticket, 200);
         } catch (\Throwable $th) {
-            return response()->json(["message" => "Error",], 400);
+            return response()->json(['Error' => $th->getMessage()], 500);
         }
     }
 
@@ -116,14 +118,13 @@ class TicketController extends Controller
      * @param  \App\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Ticket $ticket)
     {
         try {
-            $ticket = Ticket::find($id);
             $ticket->delete();
             return response()->json(['message' => 'Deleted'], 200);
         } catch (\Throwable $th) {
-            return response()->json(["message" => $th]);
+            return response()->json(['Error' => $th->getMessage()], 500);
         }
     }
 }
