@@ -13,11 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-
-Route::get('unauthorized', function () {
-    return response()->json(['message' => 'unauthorized'], 401);
-})->name('unauthorized');
-
 //Auth routes
 Route::post('login', 'API\AuthController@Authenticate');
 
