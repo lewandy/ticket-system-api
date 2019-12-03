@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class TicketStatusTableSeeder extends Seeder
+class TicketStatusesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,13 +11,13 @@ class TicketStatusTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('ticket_status')->insert([
+        DB::table('ticket_statuses')->insert([
             'name' => 'Abierto',
             'description' => 'Este es un ticket con estado abierto',
             'slug' => 'abierto',
         ]);
 
-        DB::table('ticket_status')->insert([
+        DB::table('ticket_statuses')->insert([
             'name' => 'Cerrado',
             'description' => 'Este es un ticket con estado cerrado',
             'slug' => 'cerrado',
