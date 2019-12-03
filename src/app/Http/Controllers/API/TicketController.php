@@ -6,12 +6,13 @@ use App\Ticket;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\TicketResource as TicketResource;
 
 class TicketController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('auth:api');
+        $this->middleware('auth:api');
     }
 
     /**
@@ -21,17 +22,12 @@ class TicketController extends Controller
      */
     public function index()
     {
-        return response()->json(Ticket::all(), 200);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        try {
+            $data = TicketResource::collection(Ticket::all());
+            return response()->json($data, 200);
+        } catch (\Throwable $th) {
+            return response()->json(['Error' => $th->getMessage()], 500);
+        }
     }
 
     /**
@@ -44,15 +40,15 @@ class TicketController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'subject' => 'required|max:255',
-            'description' => 'required',
-            'date' => 'date',
-            'employee_id' => 'required|numeric',
-            'status_id' => 'required|numeric',
+            'description' => 'required|string',
+            'employee_id' => 'required|numeric|exists:employees,id',
+            'status_id' => 'required|numeric|exists:ticket_status,id',
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
+
         $ticket = new Ticket([
             'subject' => $request['subject'],
             'description' => $request['description'],
@@ -60,10 +56,11 @@ class TicketController extends Controller
             'status_id' => $request['status_id']
         ]);
 
-        $ticket->save();
-        return response()->json($ticket, 200);
-        try { } catch (\Throwable $th) {
-            return response()->json("Error", 500);
+        try {
+            $ticket->save();
+            return response()->json($ticket, 201);
+        } catch (\Throwable $th) {
+            return response()->json(['Error' => $th->getMessage()], 500);
         }
     }
 
@@ -75,18 +72,12 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Ticket  $ticket
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Ticket $ticket)
-    {
-        //
+        try {
+            $resource = new TicketResource($ticket);
+            return response()->json($resource, isset($ticket) ? 200 : 404);
+        } catch (\Throwable $th) {
+            return response()->json(['Error' => $th->getMessage()], 500);
+        }
     }
 
     /**
@@ -98,7 +89,27 @@ class TicketController extends Controller
      */
     public function update(Request $request, Ticket $ticket)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'subject' => 'required|max:255',
+            'description' => 'required',
+            'employee_id' => 'required|numeric',
+            'status_id' => 'required|numeric',
+        ]);
+
+        if ($validator->fails())
+            return response()->json($validator->errors(), 400);
+
+        $ticket->subject = $request['subject'];
+        $ticket->description = $request['description'];
+        $ticket->employee_id = $request['employee_id'];;
+        $ticket->status_id = $request['status_id'];
+
+        try {
+            $ticket->save();
+            return response()->json($ticket, 200);
+        } catch (\Throwable $th) {
+            return response()->json(['Error' => $th->getMessage()], 500);
+        }
     }
 
     /**
@@ -109,6 +120,11 @@ class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
-        //
+        try {
+            $ticket->delete();
+            return response()->json(['message' => 'Deleted'], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['Error' => $th->getMessage()], 500);
+        }
     }
 }

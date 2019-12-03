@@ -22,7 +22,7 @@ class CreateTicketsTable extends Migration
             $table->timestamps();
 
             $table->foreign('employee_id')->references('id')->on('employees');
-            $table->foreign('status_id')->references('id')->on('ticket_status');
+            $table->foreign('status_id')->references('id')->on('ticket_statuses');
         });
     }
 

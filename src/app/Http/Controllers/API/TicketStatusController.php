@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\TicketStatus;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
-class StatusTicketController extends Controller
+class TicketStatusController extends Controller
 {
     /**
      * Show the profile for the given user.
@@ -16,7 +17,7 @@ class StatusTicketController extends Controller
      */
     public function __invoke()
     {
-        $data = DB::table('ticket_status')->select(['id', 'name', 'description'])->get();
+        $data = TicketStatus::all();
         return response()->json($data, 200);
     }
 }
