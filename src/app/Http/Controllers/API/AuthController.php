@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -14,14 +15,15 @@ class AuthController extends Controller
      */
     public function Authenticate(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
             'password' => 'required|string'
         ]);
 
-        $credentials = request(['email', 'password']);
+        if ($validator->fails())
+            return response()->json($validator->errors(), 400);
 
-        if (!Auth::attempt($credentials))
+        if (!Auth::attempt($request->all()))
             return response()->json([
                 'message' => 'Unauthorized'
             ], 401);
