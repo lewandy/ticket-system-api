@@ -7,14 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Ticket extends Model
 {
 
-    public function employee() {
-        return $this->belongsTo('App\Employee');
-    }
-
-    public function status() {
-        return $this->belongsTo('App\TicketStatus');
-    }
-
     /**
      * The attributes that are mass assignable.
      *
@@ -23,4 +15,21 @@ class Ticket extends Model
     protected $fillable = [
         'subject', 'description', 'date', 'employee_id', 'status_id',
     ];
+
+    /**
+     * Return employee relationship with the ticket.
+     * @return App\Employee
+     */
+    public function employee()
+    {
+        return $this->belongsTo('App\Employee');
+    }
+
+    /**
+     * Return status relationship with the ticket
+     */
+    public function status()
+    {
+        return $this->belongsTo('App\TicketStatus');
+    }
 }
