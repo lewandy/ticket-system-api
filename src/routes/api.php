@@ -19,6 +19,7 @@ Route::post('login', 'API\AuthController@Authenticate');
 //Resources
 Route::resource('employees', 'API\EmployeeController');
 Route::resource('tickets', 'API\TicketController');
+Route::resource('time-entry','API\TimeEntryController');
 
 //Ticket status list
 Route::get('tickets-status', 'API\TicketStatusController');
