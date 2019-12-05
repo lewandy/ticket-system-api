@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Ticket;
 use App\Employee;
 use App\TicketEmployee;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -43,7 +44,7 @@ class TicketController extends Controller
         $validator = Validator::make($request->all(), [
             'subject' => 'required|max:255',
             'description' => 'required|string',
-            'employee_id' => 'required|numeric|exists:employees,id',
+            'employees' => 'required|array',
             'status_id' => 'required|numeric|exists:ticket_statuses,id',
         ]);
 
@@ -51,17 +52,26 @@ class TicketController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $ticket = new Ticket([
-            'subject' => $request['subject'],
-            'description' => $request['description'],
-            'employee_id' => $request['employee_id'],
-            'status_id' => $request['status_id']
-        ]);
-
         try {
+            DB::beginTransaction();
+
+            $ticket = new Ticket([
+                'subject' => $request['subject'],
+                'description' => $request['description'],
+                'status_id' => $request['status_id']
+            ]);
             $ticket->save();
+            foreach ($request->employees as $employee) {
+                TicketEmployee::create([
+                    "employee_id" => $employee['id'],
+                    "ticket_id" => $ticket->id
+                ]);
+            }
+
+            DB::commit();
             return response()->json($ticket, 201);
         } catch (\Throwable $th) {
+            DB::rollBack();
             return response()->json(['Error' => $th->getMessage()], 500);
         }
     }
@@ -94,7 +104,6 @@ class TicketController extends Controller
         $validator = Validator::make($request->all(), [
             'subject' => 'required|max:255',
             'description' => 'required',
-            'employee_id' => 'required|numeric',
             'status_id' => 'required|numeric',
         ]);
 
@@ -103,7 +112,6 @@ class TicketController extends Controller
 
         $ticket->subject = $request['subject'];
         $ticket->description = $request['description'];
-        $ticket->employee_id = $request['employee_id'];;
         $ticket->status_id = $request['status_id'];
 
         try {

@@ -105,7 +105,7 @@ class EmployeeController extends Controller
         $employee->last_name = $request['last_name'];
         $employee->email = $request['email'];
         $employee->status = $request['status'];
-        $employee->password = Hash::make($request['password']);
+        $employee->password = isset($request['password']) ? Hash::make($request['password']) : $employee->password;
 
         try {
             $employee->save();
@@ -121,8 +121,11 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Employee $employee)
+    public function destroy(Request $request, Employee $employee)
     {
+        if ($request->user()->id == $employee->id)
+            return response()->json(['Error' => ": You cant delete your user"], 500);
+
         try {
             $employee->delete();
             return response()->json(["message" => "Deleted"], 200);
