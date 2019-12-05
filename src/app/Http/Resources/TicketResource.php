@@ -18,8 +18,8 @@ class TicketResource extends JsonResource
             'id' => $this->id,
             'subject' => $this->subject,
             'description' => $this->description,
-            'employee' => $this->employee,
-            'status' => $this->status
+            'status' => $this->status,
+            'date' => $this->created_at
         ];
     }
 }

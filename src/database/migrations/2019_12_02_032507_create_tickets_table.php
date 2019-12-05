@@ -17,11 +17,9 @@ class CreateTicketsTable extends Migration
             $table->bigIncrements('id');
             $table->string('subject','256')->nullable(false);
             $table->text('description');
-            $table->unsignedBigInteger('employee_id');
             $table->unsignedBigInteger('status_id');
             $table->timestamps();
 
-            $table->foreign('employee_id')->references('id')->on('employees');
             $table->foreign('status_id')->references('id')->on('ticket_statuses');
         });
     }
