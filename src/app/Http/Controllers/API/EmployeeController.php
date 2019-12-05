@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
-use Validator;
 use App\Employee;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -94,7 +94,7 @@ class EmployeeController extends Controller
             'name' => 'required|max:255',
             'last_name' => 'required|max:255',
             'email' => 'required|email|unique:employees,email,' . $employee->id,
-            'password' => 'required|confirmed|string'
+            'password' => 'confirmed|string'
         ]);
 
         if ($validator->fails()) {
