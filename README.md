@@ -36,7 +36,7 @@ docker exec -it tickets_workspace_1 bash   ---> now you are located in the conta
 sh setup.sh  ---> This command execute a script("/src/setup.sh") that will be setup the project
 ```
 
-The laravel config may be look like this
+The laravel config may be look like this.
 note: The sample .env file in the laravel project already has this configuration, when it is copied to .env it must work if you change anything.
 
 ```
