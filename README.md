@@ -4,7 +4,7 @@ The basic idea behind the application is that an Employee can log in and create/
 
   - Create employees
   - Create tickets and times entries
-  - Reports
+  - Reports (working)
 
 ### Tech
 
