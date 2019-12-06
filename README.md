@@ -51,7 +51,7 @@ Report Module
 The basic idea behind the application is that an Employee can log in and create/update/delete tickets and also create time entries for each of the tickets. Later, a report can be generated to get the hours worked by an employee during a time frame.
 
 ### Built With
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+
 * [Vue](https://vuejs.org/)
 * [Vuetify](https://vuetifyjs.com/en/)
 * [Laravel](https://laravel.com)
