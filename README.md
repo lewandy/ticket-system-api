@@ -71,16 +71,7 @@ https://www.docker.com/
 
 ### Installation
 
-1. Go to : https://github.com/lewandy/ticket-system-api
-2. Clone the repo in you machine
-```sh
-git clone https://github.com/your_username_/Project-Name.git
-```
-3. move to folder `docker` and copy your .env file
-```sh
-cp env-example .env
-```
-4. Run `docker-compose up postgres nginx workspace`
+For development you can check the documentation of https://laradock.io/introduction/.
 
 <!-- USAGE EXAMPLES -->
 ## Usage
