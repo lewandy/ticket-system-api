@@ -4,14 +4,13 @@ The basic idea behind the application is that an Employee can log in and create/
 
   - Create employees
   - Create tickets and times entries
-  - Reports
+  - Reports (working)
 
 ### Tech
 
 Ticket system API uses a laravel that provide a full features environment for large,scalable and maintainable applications or restful apis.
 
 * [Laravel] - Laravel is a web application framework with expressive, elegant syntax. We’ve already laid the foundation — freeing you to create without sweating the small things.!
-* 
 
 
 ### Usage
