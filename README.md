@@ -52,8 +52,6 @@ The basic idea behind the application is that an Employee can log in and create/
 
 ### Built With
 
-* [Vue](https://vuejs.org/)
-* [Vuetify](https://vuetifyjs.com/en/)
 * [Laravel](https://laravel.com)
 
 
