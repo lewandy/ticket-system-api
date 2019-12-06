@@ -15,6 +15,13 @@ Ticket system API uses a laravel that provide a full features environment for la
 
 ### Usage
 
+Default employee for authentication :
+
+```
+Email : admin@gmail.com
+password : 12345
+```
+
 Documentation can be found on this site : [Documentation](https://documenter.getpostman.com/view/9665338/SWE27Ku1?version=latest)
 
 ### Installation
