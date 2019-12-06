@@ -5,3 +5,5 @@ composer install
 composer run post-create-project-cmd
 php artisan migrate
 php artisan passport:install
+php artisan db:seed
+
