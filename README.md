@@ -69,10 +69,5 @@ If you want to install Laravel as PHP project, see How to Install Laravel in a D
 
 source : [Documentation](https://laradock.io/getting-started/#2-3-usage)
 
-### Todos
-
- - Write MORE Tests
- - Refactor time entries controller
- - refactor multiple assing employees to a ticket
 
 
