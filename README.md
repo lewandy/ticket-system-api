@@ -32,7 +32,8 @@ Ticket system api requires [Docker ](https://www.docker.com/) to run or a dedica
 git clone https://github.com/lewandy/ticket-system-api
 cd docker 
 docker-compose up
-docker exec -it tickets_workspace_1 sh setup.sh   ---> now you are located in the container shell
+docker exec -it tickets_workspace_1 bash   ---> now you are located in the container shell
+sh setup.sh
 ```
 
 The laravel config may be look like this.
