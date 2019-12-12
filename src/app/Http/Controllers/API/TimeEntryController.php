@@ -60,7 +60,7 @@ class TimeEntryController extends Controller
 
         try {
             $timeEntry->save();
-            return response()->json($timeEntry, 200);
+            return response()->json($timeEntry, 201);
         } catch (\Throwable $th) {
             return response()->json($validator->getMessages(), 500);
         }
@@ -123,6 +123,11 @@ class TimeEntryController extends Controller
      */
     public function destroy(TimeEntry $timeEntry)
     {
-        //
+        try {
+            $timeEntry->delete();
+            return response()->json(['message' => "Time entry deleted"], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 500);
+        }
     }
 }

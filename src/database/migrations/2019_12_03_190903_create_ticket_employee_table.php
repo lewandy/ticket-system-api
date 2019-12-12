@@ -19,11 +19,16 @@ class CreateTicketEmployeeTable extends Migration
             $table->unsignedInteger('ticket_id');
             $table->timestamps();
 
-            $table->foreign('employee_id')->references('id')->on('employees');
-            $table->foreign('ticket_id')->references('id')->on('tickets');
+            $table->foreign('employee_id')
+                ->references('id')
+                ->on('employees')
+                ->onDelete('NO ACTION');
+
+            $table->foreign('ticket_id')
+                ->references('id')
+                ->on('tickets')
+                ->onDelete('cascade');;
         });
-
-
     }
 
     /**

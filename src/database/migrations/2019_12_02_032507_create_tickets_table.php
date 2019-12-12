@@ -15,7 +15,7 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('subject','256')->nullable(false);
+            $table->string('subject', '256')->nullable(false);
             $table->text('description');
             $table->unsignedBigInteger('status_id');
             $table->timestamps();
