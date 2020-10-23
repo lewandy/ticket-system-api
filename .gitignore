@@ -1,0 +1,28 @@
+##### Windows
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+##### Linux
+*~
+
+# cask packages
+.cask/
+dist/
+
+##### VisualStudioCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+##### Composer
+composer.phar
+/vendor/
