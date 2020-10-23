@@ -69,5 +69,8 @@ If you want to install Laravel as PHP project, see How to Install Laravel in a D
 
 source : [Documentation](https://laradock.io/getting-started/#2-3-usage)
 
+### License
+
+This project is open source and available under the [MIT License](LICENSE)
 
 
